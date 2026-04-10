@@ -86,7 +86,6 @@
         border: 1px solid #222;
     }
 
-    /* MERCH - Adjusted to 4 columns for the new item */
     .merch-grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
@@ -131,6 +130,43 @@
     .contact-email a {
         color: #ff1a1a;
         text-decoration: none;
+    }
+
+    /* CHATBOT */
+    #chatbot {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 260px;
+        background: #111;
+        border: 1px solid #990000;
+        border-radius: 8px;
+        overflow: hidden;
+        font-size: 0.9em;
+    }
+
+    #chat-header {
+        background: #990000;
+        padding: 10px;
+        color: white;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    #chat-box {
+        height: 200px;
+        overflow-y: auto;
+        padding: 10px;
+        color: #ccc;
+    }
+
+    #chat-input {
+        width: 100%;
+        padding: 8px;
+        border: none;
+        outline: none;
+        background: #000;
+        color: white;
     }
 </style>
 </head>
@@ -185,24 +221,73 @@
 
             <div class="item">
                 Hoodie
-                <div class="price">$29.99</div>
+                <div class="price">$39.99</div>
                 <button onclick="alert('Added (demo)')">Buy</button>
             </div>
 
             <div class="item">
                 Hat
-                <div class="price">$9.99</div>
+                <div class="price">$14.99</div>
                 <button onclick="alert('Added (demo)')">Buy</button>
             </div>
 
             <div class="item">
                 Tiger Tubes
-                <div class="price">$34.99</div>
+                <div class="price">$24.99</div>
                 <button onclick="alert('Added (demo)')">Buy</button>
             </div>
         </div>
     </div>
 </section>
+
+<!-- CHATBOT -->
+<div id="chatbot">
+    <div id="chat-header">Darrel Burke (AI)</div>
+    <div id="chat-box"></div>
+    <input type="text" id="chat-input" placeholder="Ask me anything..." />
+</div>
+
+<script>
+const input = document.getElementById("chat-input");
+const box = document.getElementById("chat-box");
+
+input.addEventListener("keypress", function(e) {
+    if (e.key === "Enter") {
+        let userText = input.value;
+        addMessage("You: " + userText);
+        respond(userText);
+        input.value = "";
+    }
+});
+
+function addMessage(msg) {
+    let div = document.createElement("div");
+    div.textContent = msg;
+    box.appendChild(div);
+    box.scrollTop = box.scrollHeight;
+}
+
+function respond(text) {
+    let reply = "I'm Darrel Burke AI.";
+
+    text = text.toLowerCase();
+
+    if (text.includes("hello") || text.includes("hi")) {
+        reply = "What's up? You're talking to Darrel Burke.";
+    }
+    else if (text.includes("merch")) {
+        reply = "Check out the merch section 🔥";
+    }
+    else if (text.includes("burkens")) {
+        reply = "Burkens happen every day. Stay tuned.";
+    }
+    else if (text.includes("contact")) {
+        reply = "You can reach us at darrel.burke@email.com";
+    }
+
+    setTimeout(() => addMessage("Darrel: " + reply), 500);
+}
+</script>
 
 </body>
 </html>
